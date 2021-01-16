@@ -89,6 +89,22 @@ DATABASES = {
     }
 }
 
+# Caches
+# https://github.com/jazzband/django-redis
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": env.str('REDIS_URL'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor"
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -112,9 +128,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hant'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
@@ -128,6 +144,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Line Chatbot Setting
+# https://developers.line.biz/en/docs/messaging-api/overview/
 
 LINE_CHANNEL_ACCESS_TOKEN = env.str('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = env.str('LINE_CHANNEL_SECRET')

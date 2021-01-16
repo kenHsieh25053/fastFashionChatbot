@@ -1,6 +1,6 @@
-from django.urls import path, include
-from .views import Handler
+from django.urls import path
+from .views import Controller
 
 urlpatterns = [
-    path('callback', Handler.as_view()),
+    path('callback', Controller.as_view()),
 ]
