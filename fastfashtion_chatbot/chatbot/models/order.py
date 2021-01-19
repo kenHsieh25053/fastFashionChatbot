@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator
 import uuid
 import datetime
 
-from .customer import Customer
+from .customer import CustomerModel
 
 
 class OrderModel(models.Model):
@@ -33,4 +33,8 @@ class OrderModel(models.Model):
     shipped = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(CustomerModel, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'order'
+        ordering = ['-created_at']

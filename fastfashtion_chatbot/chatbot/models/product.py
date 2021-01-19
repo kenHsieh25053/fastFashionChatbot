@@ -4,7 +4,7 @@ from django.core.validators import validate_ipv4_address, validate_ipv6_address,
     validate_ipv46_address, MinValueValidator
 import uuid
 
-from .category import Category
+from .category import CategoryModel
 
 
 class ProductModel(models.Model):
@@ -19,4 +19,8 @@ class ProductModel(models.Model):
         validators=[validate_ipv4_address, validate_ipv6_address, validate_ipv46_address]))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category_id = models.ForeignKey(CategoryModel, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'product'
+        ordering = ['-created_at']

@@ -10,7 +10,11 @@ class CustomerModel(models.Model):
     birthday = models.DateField()
     email_address = models.EmailField(validators=[validate_email])
     city = models.CharField(max_length=10)
-    region = models.CharField(max_length=10)
+    district = models.CharField(max_length=10)
     street_address = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'customer'
+        ordering = ['-created_at']

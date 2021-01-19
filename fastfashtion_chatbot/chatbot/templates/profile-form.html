@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="form-group col-md-6">
+                {{ form }}
+                <input class="btn btn-success" type="submit" value="送出" />
+            </div>
+        </div>
+    </form>
+{% endblock %}

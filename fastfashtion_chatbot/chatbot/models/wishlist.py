@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 
-from .customer import Customer
+from .customer import CustomerModel
 
 
 class WishlistModel(models.Model):
@@ -9,4 +9,8 @@ class WishlistModel(models.Model):
     items = models.JSONField()  # name, size, quantity, price
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(CustomerModel, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'wishlist'
+        ordering = ['-created_at']

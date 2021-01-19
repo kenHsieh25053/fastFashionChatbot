@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import environ
+import os
 
 env = environ.Env()
 env.read_env('../envs/env.%s' % env.str('STAGE', 'dev'))
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.gzip.GZipMiddleware',  # compress all data
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'fastfashtion_chatbot.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates').replace('\\', '/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,3 +151,4 @@ STATIC_URL = '/static/'
 
 LINE_CHANNEL_ACCESS_TOKEN = env.str('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = env.str('LINE_CHANNEL_SECRET')
+DOMAIN = env.str('DOMAIN')

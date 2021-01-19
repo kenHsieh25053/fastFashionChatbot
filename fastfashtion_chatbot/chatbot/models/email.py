@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import validate_email
 import uuid
 
-from .customer import Customer
+from .customer import CustomerModel
 
 
 class EmailModel(models.Model):
@@ -20,4 +20,8 @@ class EmailModel(models.Model):
     email = models.EmailField(validators=[validate_email])
     content = models.TextField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(CustomerModel, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'email'
+        ordering = ['-created_at']
