@@ -17,6 +17,7 @@ class ProductModel(models.Model):
     description = models.TextField(max_length=600)
     image_urls = ArrayField(models.URLField(
         validators=[validate_ipv4_address, validate_ipv6_address, validate_ipv46_address]))
+    published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category_id = models.ForeignKey(CategoryModel, on_delete=models.CASCADE)

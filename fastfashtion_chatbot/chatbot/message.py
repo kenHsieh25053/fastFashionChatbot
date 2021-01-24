@@ -14,16 +14,15 @@ class MessageHandler():
     def __init__(self):
         pass
 
-    def reply_text_message(self, event):
+    def reply_text_message(self, event, text):
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event.message.text)
+            TextSendMessage(text=text)
         )
 
     def reply_quickreply_message(self, buttons, event):
         quick_reply_messages = []
         for button in buttons:
-            print(button)
             quick_reply_button = QuickReplyButton(action=PostbackAction(
                 label=button['label'], display_text=button['label'], data=button['data']))
             quick_reply_messages.append(quick_reply_button)
@@ -33,5 +32,11 @@ class MessageHandler():
                             quick_reply=QuickReply(items=quick_reply_messages))
         )
 
-    def reply_postback_message(self, event):
+    def reply_postback_message(self, event, data):
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=data)
+        )
+
+    def reply_flex_message(self, event):
         pass

@@ -1,23 +1,104 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>fashFashionForm</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>fashFashionForm</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1 user-scalable=no"
+    />
+    <link rel="stylesheet" href="" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <style>
+      html,
+      body {
+        touch-action: manipulation;
+        background-color: whitesmoke;
+        height: 100%;
+      }
+    </style>
+    <!-- 引入jquery 和 縣市選擇器套件 -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+    <!-- 引入 LIFF SDK -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  </head>
+
+  <body>
+    {% block content %} {% endblock %}
+    <!-- bootstrap5 js cdn -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 加入 required 屬性到縣市選擇套件 -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('select').attr('required', true);
+        $('select').addClass('form-control-lg');
+      });
+    </script>
+    <!-- 縣市選擇套件 -->
+    <script type="text/javascript">
+      $('#twzipcode').twzipcode({
+        zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+      });
+    </script>
+    <!-- LIFF設定 -->
+    <!-- 送出鈕 -->
+    <script type="text/javascript">
+      var liffID = '1655603396-pm1nzwnE';
+      liff
+        .init({
+          liffId: liffID,
+        })
+        .then(function () {
+          console.log('LIFF init');
+          if (!liff.isLoggedIn()) {
+            liff.login();
+          }
+          // 取得使用者line channel id
+          var context = liff.getContext();
+          document.getElementById('line_channel_id').value = context.userId;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        'use strict';
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            'submit',
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add('was-validated');
+            },
+            false
+          );
+        });
+      })();
+    </script>
+  </body>
 </html>
